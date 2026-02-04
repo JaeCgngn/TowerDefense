@@ -5,6 +5,7 @@ public class Node : MonoBehaviour
 
     private GameObject turret;
 
+    public Vector3 positionOffset;
     public Color hoverColor;
     private Color startColor;
     private Renderer rend;
@@ -27,6 +28,9 @@ public class Node : MonoBehaviour
             Debug.Log("Turret already exists on this node.");
             return;
         }
+
+        GameObject turretToBuild = BuildManager.instance.GetTurretToBuild();
+        turret = (GameObject)Instantiate(turretToBuild, transform.position + positionOffset, transform.rotation);
 
         Debug.Log("Turret placed on node: " + gameObject.name);
     }

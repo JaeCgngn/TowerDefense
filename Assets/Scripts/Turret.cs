@@ -16,13 +16,8 @@ public class Turret : MonoBehaviour
     [Range(1f, -1f)]
     public float dotThreshold = 0.7f;
 
-
-
-
     Quaternion originalRotation;
     private Shooting shooting;
-
-
 
     void Start()
     {
@@ -86,31 +81,26 @@ public class Turret : MonoBehaviour
         {
             Vector3 directionToEnemy = (enemy.transform.position - transform.position).normalized;
             float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
-
             float dot = Vector3.Dot(transform.forward, directionToEnemy);
 
             if (dot >= dotThreshold && distanceToEnemy < shortestDistance)
             {
                 shortestDistance = distanceToEnemy;
                 nearestEnemy = enemy;
-
-                if (enemyTarget != null)
-                {
-                    shooting.StartFiring();
-                }
-                else
-                {
-                    shooting.StopFiring();
-                }
             }
-
         }
-
         if (nearestEnemy != null && shortestDistance <= range)
+        {
             enemyTarget = nearestEnemy.transform;
+            shooting.StartFiring();
+        }
         else
+        {
             enemyTarget = null;
+            shooting.StopFiring();
+        }
     }
+
 
 
 
