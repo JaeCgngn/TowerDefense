@@ -38,6 +38,7 @@ public class WaveSpawner : MonoBehaviour
         float curveValue = waveEnemyCountCurve.Evaluate(waveNumber);
         int enemiesThisWave = Mathf.Clamp(Mathf.RoundToInt(curveValue), 1, maxEnemiesPerWave);
 
+
         for (int i = 0; i < enemiesThisWave; i++)
         {
             SpawnEnemy();

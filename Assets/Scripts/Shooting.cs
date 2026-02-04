@@ -68,9 +68,9 @@ public class Shooting : MonoBehaviour
         {
             Vector3 spreadDirection =
                 Quaternion.Euler(
-                    0f,
+                    0f, // X axis = vertical spread
                     Random.Range(-spreadAngle, spreadAngle), // Y axis = horizontal spread
-                    0f
+                    0f  // Z axis = no roll
 
                 ) * firePoint.forward;
 
