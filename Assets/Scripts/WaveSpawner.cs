@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+
 public class WaveSpawner : MonoBehaviour
 {
 
@@ -9,9 +10,14 @@ public class WaveSpawner : MonoBehaviour
 
     public float EnemySpawnInterval = 0.5f;
 
+
+    [Header("Wave Settings")]
     public float countdown = 2f;
     public int waveNumber = 1;
     public float waveIndex = 0;
+
+    public AnimationCurve waveEnemyCountCurve;
+    public int maxEnemiesPerWave = 20;
 
     void Update()
     {
@@ -27,15 +33,19 @@ public class WaveSpawner : MonoBehaviour
 
     IEnumerator SpawnWave()
     {
-        Debug.Log("Wave Incoming! Wave: " + waveNumber);
 
-        waveNumber++;
+        // Use curve to determine how many enemies to spawn
+        float curveValue = waveEnemyCountCurve.Evaluate(waveNumber);
+        int enemiesThisWave = Mathf.Clamp(Mathf.RoundToInt(curveValue), 1, maxEnemiesPerWave);
 
-        for (int i = 0; i < waveNumber + 1; i++)
+        for (int i = 0; i < enemiesThisWave; i++)
         {
             SpawnEnemy();
             yield return new WaitForSeconds(EnemySpawnInterval);
         }
+
+        Debug.Log("Curve Value: " + curveValue + "Wave Incoming! Wave: "
+        + waveNumber + " Enemies: " + Mathf.Clamp(Mathf.RoundToInt(curveValue), 1, maxEnemiesPerWave));
 
         waveNumber++;
     }
