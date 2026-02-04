@@ -14,7 +14,8 @@ public class Shooting : MonoBehaviour
     [Header("Shooter Settings")]
     public float fireRate = 1f;
 
-    public float speed = 20f;
+    public float bulletLifetime = 3f;
+    public float bulletSpeed = 20f;
 
     [Header("Spread Settings")]
     public int bulletsPerShot = 1;      // Number of bullets fired each time
@@ -63,21 +64,28 @@ public class Shooting : MonoBehaviour
     {
         Debug.Log("Bullet Fired");
 
-        for (int i = 0; i < bulletsPerShot; i++) // Fire multiple bullets per shot
+        for (int i = 0; i < bulletsPerShot; i++)
         {
-            // Calculate random spread angle
-            float randomAngle = Random.Range(-spreadAngle / 2f, spreadAngle / 2f);
+            Vector3 spreadDirection =
+                Quaternion.Euler(
+                    0f,
+                    Random.Range(-spreadAngle, spreadAngle), // Y axis = horizontal spread
+                    0f
 
-            // Apply spread to rotation
-            Quaternion spreadRotation = firePoint.rotation * Quaternion.Euler(0, 0, randomAngle);
+                ) * firePoint.forward;
 
+            Quaternion spreadRotation = Quaternion.LookRotation(spreadDirection);
 
-            Instantiate(
+            GameObject bulletObj = Instantiate(
                 bulletPrefab,
                 firePoint.position,
                 spreadRotation
             );
+
+            // Set bullet lifetime and speed from the shooter script
+            bulletObj.GetComponent<Bullet>().Initialize(bulletLifetime, bulletSpeed);
         }
     }
+
 
 }
