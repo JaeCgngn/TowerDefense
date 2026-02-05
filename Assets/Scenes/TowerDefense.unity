@@ -596,13 +596,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.70710576, y: -0, z: -0, w: 0.70710784}
-  m_LocalPosition: {x: 12, y: 50, z: 12}
+  m_LocalRotation: {x: 0.5783386, y: -0, z: -0, w: 0.81579685}
+  m_LocalPosition: {x: 12, y: 44.4, z: -4.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 70.668, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2287,7 +2287,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   SpawnPoint: {fileID: 1194943350}
   enemyPrefab: {fileID: 6398246753855792550, guid: 6dce639d44e646a459afa85b137dd7db, type: 3}
-  timeBetweenWaves: 20
   EnemySpawnInterval: 0.9
   countdown: 10
   waveNumber: 1
@@ -2316,6 +2315,32 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  waveDelayCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 3
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 10
+      value: 30
+      inSlope: 0.71959466
+      outSlope: 0.71959466
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.231532
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  minWaveDelay: 3
+  maxWaveDelay: 10
   maxEnemiesPerWave: 20
 --- !u!4 &1468003319
 Transform:
@@ -2344,7 +2369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 408695d43d2a6544d94bfce3882efeba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  standardTurretPrefab: {fileID: 124785842461189131, guid: e1f980e14595f8840a9458e2afb4f1d9, type: 3}
+  standardTurretPrefab: {fileID: 8909124517617308047, guid: a12e2553c269baa4b83f3b3c46628041, type: 3}
 --- !u!1001 &1468076348
 PrefabInstance:
   m_ObjectHideFlags: 0
