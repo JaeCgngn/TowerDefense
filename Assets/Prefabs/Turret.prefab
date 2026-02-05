@@ -251,9 +251,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Turret
   enemyTarget: {fileID: 6398246753855792550, guid: 6dce639d44e646a459afa85b137dd7db, type: 3}
   partToRotate: {fileID: 3803971817209525754}
-  enemyTag: Enemy
+  shooting: {fileID: 0}
   range: 10
   rotationSpeed: 5
+  enemyTag: Enemy
+  floatAmplitude: 0.3
+  floatSpeed: 2
+  idleRotationAmount: 4
   dotThreshold: 0.64
 --- !u!114 &4094169785910487067
 MonoBehaviour:

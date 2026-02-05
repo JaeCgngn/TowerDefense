@@ -5,43 +5,63 @@ public class Turret : MonoBehaviour
 {
     [Header("Turret References")]
     public Transform enemyTarget;
-    public Transform partToRotate;
-    public string enemyTag = "Enemy";
+    [SerializeField] private Transform partToRotate;
+    [SerializeField] private Shooting shooting;
 
     [Header("Turret Settings")]
-    public float range = 10f;
+    [SerializeField] private float range = 10f;
+    [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private string enemyTag = "Enemy";
 
-    public float rotationSpeed = 5f;
+    [Header("Idle Animation")]
+    [SerializeField] private float floatAmplitude = 0.1f;
+    [SerializeField] private float floatSpeed = 2f;
+    [SerializeField] private float idleRotationAmount = 2f;
 
-    [Range(1f, -1f)]
-    public float dotThreshold = 0.7f;
 
-    Quaternion originalRotation;
-    private Shooting shooting;
+    [Header("Targeting")]
+    [Range(-1f, 1f)]
+    [SerializeField] private float dotThreshold = 0.7f;
+
+    private bool isIdle = false;
+    private float idleTime;
+
+    private Quaternion originalRotation;
+    private Vector3 originalPosition;
 
     void Start()
     {
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
 
-        originalRotation = transform.rotation; //store original rotation
 
     }
 
     private void Awake()
     {
-        shooting = GetComponent<Shooting>();
+        originalRotation = partToRotate.rotation;
+        originalPosition = partToRotate.position;
+
+        if (!shooting)
+            shooting = GetComponent<Shooting>();
     }
 
     void Update()
     {
         if (enemyTarget != null)
         {
+            isIdle = false;
             TurretRotation();
-
         }
         else
         {
-            ReturnToOriginalRotation();
+            if (!isIdle)
+            {
+                ReturnToOriginalRotation();
+            }
+            else
+            {
+                IdleFloat();
+            }
         }
 
     }
@@ -65,7 +85,31 @@ public class Turret : MonoBehaviour
             originalRotation,
             rotationSpeed * Time.deltaTime
         );
+
+        if (Quaternion.Angle(transform.rotation, originalRotation) < 0.1f)
+        {
+            isIdle = true;
+            idleTime = 0f;
+        }
+
+
     }
+
+    void IdleFloat()
+    {
+        idleTime += Time.deltaTime;
+
+        // Vertical float
+        float yOffset = Mathf.Sin(idleTime * floatSpeed) * floatAmplitude;
+        transform.position = originalPosition + Vector3.up * yOffset;
+
+        // Gentle rotation sway (optional but nice)
+        float rotOffset = Mathf.Sin(idleTime * floatSpeed) * idleRotationAmount;
+        transform.rotation = originalRotation * Quaternion.Euler(0f, rotOffset, 0f);
+
+
+    }
+
     void UpdateTarget()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);

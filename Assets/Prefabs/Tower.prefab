@@ -53,12 +53,40 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4349810623501664004, guid: a12e2553c269baa4b83f3b3c46628041, type: 3}
+      propertyPath: dotThreshold
+      value: 0.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349810623501664004, guid: a12e2553c269baa4b83f3b3c46628041, type: 3}
       propertyPath: rotationSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000232706352353422, guid: a12e2553c269baa4b83f3b3c46628041, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0000038002659
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000232706352353422, guid: a12e2553c269baa4b83f3b3c46628041, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.6666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000232706352353422, guid: a12e2553c269baa4b83f3b3c46628041, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.105667114
+      objectReference: {fileID: 0}
+    - target: {fileID: 7853762316212769411, guid: a12e2553c269baa4b83f3b3c46628041, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0000028461216
+      objectReference: {fileID: 0}
+    - target: {fileID: 7853762316212769411, guid: a12e2553c269baa4b83f3b3c46628041, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7853762316212769411, guid: a12e2553c269baa4b83f3b3c46628041, type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8909124517617308047, guid: a12e2553c269baa4b83f3b3c46628041, type: 3}
       propertyPath: m_Name
-      value: ShotgunTurret
+      value: Tower
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

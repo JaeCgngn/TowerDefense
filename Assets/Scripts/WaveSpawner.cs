@@ -6,8 +6,6 @@ public class WaveSpawner : MonoBehaviour
 
     public Transform SpawnPoint;
     public Transform enemyPrefab;
-    public float timeBetweenWaves = 5f;
-
     public float EnemySpawnInterval = 0.5f;
 
 
@@ -15,21 +13,29 @@ public class WaveSpawner : MonoBehaviour
     public float countdown = 2f;
     public int waveNumber = 1;
     public float waveIndex = 0;
+    private bool isSpawning;
 
     public AnimationCurve waveEnemyCountCurve;
+
+    [SerializeField] private AnimationCurve waveDelayCurve;
+    [SerializeField] private float minWaveDelay = 2f;
+    [SerializeField] private float maxWaveDelay = 10f;
     public int maxEnemiesPerWave = 20;
 
     void Update()
     {
 
+        if (isSpawning)
+            return;
+
         if (countdown <= 0f)
         {
             StartCoroutine(SpawnWave());
-            countdown = timeBetweenWaves;
+            isSpawning = true;
         }
+
         countdown -= Time.deltaTime;
     }
-
 
     IEnumerator SpawnWave()
     {
@@ -48,9 +54,21 @@ public class WaveSpawner : MonoBehaviour
         Debug.Log("Curve Value: " + curveValue + "Wave Incoming! Wave: "
         + waveNumber + " Enemies: " + Mathf.Clamp(Mathf.RoundToInt(curveValue), 1, maxEnemiesPerWave));
 
+        isSpawning = false;
+        countdown = GetNextWaveDelay();
         waveNumber++;
     }
 
+    float GetNextWaveDelay()
+    {
+        float curveValue = waveDelayCurve.Evaluate(waveNumber);
+
+        // Map curve value to delay range
+        float delay = Mathf.Lerp(minWaveDelay, maxWaveDelay, curveValue);
+
+        Debug.Log("Next Wave Delay: " + delay);
+        return delay;
+    }
 
     void SpawnEnemy()
     {
