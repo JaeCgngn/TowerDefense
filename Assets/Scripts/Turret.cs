@@ -45,7 +45,6 @@ public class Turret : MonoBehaviour
         }
 
     }
-
     void TurretRotation()
     {
 
@@ -59,7 +58,6 @@ public class Turret : MonoBehaviour
         partToRotate.rotation = Quaternion.Lerp(partToRotate.rotation, smoothRotation, Time.deltaTime * rotationSpeed);
 
     }
-
     void ReturnToOriginalRotation()
     {
         transform.rotation = Quaternion.Lerp(
@@ -68,9 +66,6 @@ public class Turret : MonoBehaviour
             rotationSpeed * Time.deltaTime
         );
     }
-
-
-
     void UpdateTarget()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
@@ -100,11 +95,6 @@ public class Turret : MonoBehaviour
             shooting.StopFiring();
         }
     }
-
-
-
-
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

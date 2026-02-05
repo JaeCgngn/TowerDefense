@@ -8,6 +8,8 @@ public class Shooting : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform firePoint;
 
+    private Turret turret; // Set this to the enemy target later
+
     Coroutine fireCoroutine;
     bool isFiring = true;
 
@@ -17,9 +19,9 @@ public class Shooting : MonoBehaviour
     public float bulletLifetime = 3f;
     public float bulletSpeed = 20f;
 
-    [Header("Spread Settings")]
-    public int bulletsPerShot = 1;      // Number of bullets fired each time
-    public float spreadAngle = 10f;
+    [Header("Burst Settings")]
+    public int bulletsPerShot = 1;        // Number of bullets in the burst
+    public float burstDelay = 0.1f;
 
 
 
@@ -30,7 +32,10 @@ public class Shooting : MonoBehaviour
 
     }
 
-
+    private void Awake()
+    {
+        turret = GetComponent<Turret>();
+    }
 
 
     public IEnumerator FireRoutine()
@@ -39,7 +44,7 @@ public class Shooting : MonoBehaviour
 
         while (isFiring)
         {
-            FireBullet();
+            yield return StartCoroutine(FireBullet());
             yield return new WaitForSeconds(fireRate);
         }
 
@@ -60,32 +65,22 @@ public class Shooting : MonoBehaviour
     }
 
 
-    void FireBullet()
+    private IEnumerator FireBullet()
     {
         Debug.Log("Bullet Fired");
 
         for (int i = 0; i < bulletsPerShot; i++)
         {
-            Vector3 spreadDirection =
-                Quaternion.Euler(
-                    0f, // X axis = vertical spread
-                    Random.Range(-spreadAngle, spreadAngle), // Y axis = horizontal spread
-                    0f  // Z axis = no roll
+            Vector3 bulletDirection = firePoint.forward;
+            Quaternion bulletRotation = Quaternion.LookRotation(bulletDirection);
 
-                ) * firePoint.forward;
+            GameObject bulletObj = Instantiate(bulletPrefab, firePoint.position, bulletRotation);
+            Bullet bullet = bulletObj.GetComponent<Bullet>();
 
-            Quaternion spreadRotation = Quaternion.LookRotation(spreadDirection);
+            bullet.Seek(turret.enemyTarget);
 
-            GameObject bulletObj = Instantiate(
-                bulletPrefab,
-                firePoint.position,
-                spreadRotation
-            );
-
-            // Set bullet lifetime and speed from the shooter script
-            bulletObj.GetComponent<Bullet>().Initialize(bulletLifetime, bulletSpeed);
+            yield return new WaitForSeconds(burstDelay);
         }
     }
-
 
 }

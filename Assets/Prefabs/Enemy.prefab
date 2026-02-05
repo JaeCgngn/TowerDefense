@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8598251430905845895}
   - component: {fileID: 4981297130446516959}
   - component: {fileID: 8273801413710658417}
+  - component: {fileID: -3446197326154198804}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -128,3 +129,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
   speed: 5
+--- !u!114 &-3446197326154198804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5197606378378224977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba542f694e8541f4998ba9f57735e547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  hitRadius: 2.5

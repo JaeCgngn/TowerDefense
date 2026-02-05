@@ -272,5 +272,5 @@ MonoBehaviour:
   fireRate: 1
   bulletLifetime: 1
   bulletSpeed: 20
-  bulletsPerShot: 3
-  spreadAngle: 17.81
+  bulletsPerShot: 1
+  burstDelay: 0.1

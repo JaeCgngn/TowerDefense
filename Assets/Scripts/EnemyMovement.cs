@@ -5,9 +5,6 @@ public class EnemyMovement : MonoBehaviour
 
     [Header("Movement Settings")]
     public float speed = 5f;
-
-
-
     private Transform target;
     private int waypointIndex = 0;
 
@@ -29,6 +26,8 @@ public class EnemyMovement : MonoBehaviour
     {
         Vector3 direction = (target.position - transform.position).normalized;
         transform.position += direction * speed * Time.deltaTime;
+
+
         if (Vector3.Distance(transform.position, target.position) <= 0.2f)
         {
             GetNextWaypoint();
