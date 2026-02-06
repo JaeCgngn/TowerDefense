@@ -1,8 +1,12 @@
+
 using UnityEngine;
 
 public class BuildManager : MonoBehaviour
 {
-    public static BuildManager instance;
+
+     public static BuildManager instance;
+
+    private GameObject turretToBuild;
 
     void Awake()
     {
@@ -12,20 +16,19 @@ public class BuildManager : MonoBehaviour
             return;
         }
         instance = this;
-
     }
-    public GameObject standardTurretPrefab;
-    void Start()
+
+    public void SelectTurretToBuild(TurretBlueprint turret)
     {
-        turretToBuild = standardTurretPrefab;
+        turretToBuild = turret.prefab;
+        Debug.Log("Turret selected to build: " + turretToBuild.name);
     }
-
-    private GameObject turretToBuild;
 
     public GameObject GetTurretToBuild()
     {
         return turretToBuild;
     }
+
 
 
 

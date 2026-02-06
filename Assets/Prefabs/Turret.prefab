@@ -258,6 +258,8 @@ MonoBehaviour:
   floatAmplitude: 0.3
   floatSpeed: 2
   idleRotationAmount: 4
+  enlargedScale: {x: 2.4, y: 2.4, z: 2.4}
+  scaleSpeed: 5
   dotThreshold: 0.64
 --- !u!114 &4094169785910487067
 MonoBehaviour:

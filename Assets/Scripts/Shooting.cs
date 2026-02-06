@@ -77,7 +77,12 @@ public class Shooting : MonoBehaviour
             GameObject bulletObj = Instantiate(bulletPrefab, firePoint.position, bulletRotation);
             Bullet bullet = bulletObj.GetComponent<Bullet>();
 
-            bullet.Seek(turret.enemyTarget);
+            if (bullet != null)
+            {
+                bullet.speed = bulletSpeed;
+                bullet.lifeTime = bulletLifetime;
+                bullet.Seek(turret.enemyTarget);
+            }
 
             yield return new WaitForSeconds(burstDelay);
         }

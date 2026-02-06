@@ -10,16 +10,20 @@ public class Node : MonoBehaviour
     private Color startColor;
     private Renderer rend;
 
+    BuildManager buildManager;
+
     void Start()
     {
 
         rend = GetComponent<Renderer>();
         startColor = rend.material.color;
 
+          buildManager = BuildManager.instance;
+
     }
 
 
-    void OnMouseDown()
+     void OnMouseDown()
     {
         Debug.Log("Node Clicked: " + gameObject.name);
 
@@ -29,13 +33,22 @@ public class Node : MonoBehaviour
             return;
         }
 
-        GameObject turretToBuild = BuildManager.instance.GetTurretToBuild();
-        turret = (GameObject)Instantiate(turretToBuild, transform.position + positionOffset, transform.rotation);
+        GameObject turretToBuild = buildManager.GetTurretToBuild();
+
+        if (turretToBuild == null)
+        {
+            Debug.Log("No turret selected to build.");
+            return;
+        }
+
+        turret = Instantiate(
+            turretToBuild,
+            transform.position + positionOffset,
+            Quaternion.identity
+        );
 
         Debug.Log("Turret placed on node: " + gameObject.name);
     }
-
-
 
     void OnMouseEnter()
     {
@@ -49,6 +62,8 @@ public class Node : MonoBehaviour
         Debug.Log("Mouse Exited Node: " + gameObject.name);
         rend.material.color = startColor;
     }
+
+    
 
 
 

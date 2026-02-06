@@ -18,6 +18,11 @@ public class Turret : MonoBehaviour
     [SerializeField] private float floatSpeed = 2f;
     [SerializeField] private float idleRotationAmount = 2f;
 
+    [Header("Anticipation Effect")]
+    public Vector3 enlargedScale = new Vector3(1.2f, 1.2f, 1.2f); // target size
+    public float scaleSpeed = 5f; // how fast it grows/shrinks
+    private Vector3 originalScale;
+    public bool scaleOnlyY = false;  
 
     [Header("Targeting")]
     [Range(-1f, 1f)]
@@ -40,6 +45,7 @@ public class Turret : MonoBehaviour
     {
         originalRotation = partToRotate.rotation;
         originalPosition = partToRotate.position;
+        originalScale = transform.localScale; 
 
         if (!shooting)
             shooting = GetComponent<Shooting>();
@@ -63,6 +69,8 @@ public class Turret : MonoBehaviour
                 IdleFloat();
             }
         }
+       bool shouldEnlarge = enemyTarget != null; // enlarge if we have a target
+        HandleAnticipation(shouldEnlarge);
 
     }
     void TurretRotation()
@@ -109,6 +117,24 @@ public class Turret : MonoBehaviour
 
 
     }
+
+    void HandleAnticipation(bool enlarge)
+    {
+        Vector3 targetScale;
+
+        if (scaleOnlyY)
+        {
+            float targetY = enlarge ? enlargedScale.y : originalScale.y;
+            targetScale = new Vector3(originalScale.x, targetY, originalScale.z);
+        }
+        else
+        {
+            targetScale = enlarge ? enlargedScale : originalScale;
+        }
+
+        transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * scaleSpeed);
+    }
+
 
     void UpdateTarget()
     {
