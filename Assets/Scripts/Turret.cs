@@ -1,162 +1,90 @@
-
+using System;
 using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
-    [Header("Turret References")]
+    [Header("References")]
     public Transform enemyTarget;
     [SerializeField] private Transform partToRotate;
     [SerializeField] private Shooting shooting;
 
-    [Header("Turret Settings")]
+    [Header("Settings")]
     [SerializeField] private float range = 10f;
     [SerializeField] private float rotationSpeed = 5f;
     [SerializeField] private string enemyTag = "Enemy";
-
-    [Header("Idle Animation")]
-    [SerializeField] private float floatAmplitude = 0.1f;
-    [SerializeField] private float floatSpeed = 2f;
-    [SerializeField] private float idleRotationAmount = 2f;
-
-    [Header("Anticipation Effect")]
-    public Vector3 enlargedScale = new Vector3(1.2f, 1.2f, 1.2f); // target size
-    public float scaleSpeed = 5f; // how fast it grows/shrinks
-    private Vector3 originalScale;
-    public bool scaleOnlyY = false;  
 
     [Header("Targeting")]
     [Range(-1f, 1f)]
     [SerializeField] private float dotThreshold = 0.7f;
 
-    private bool isIdle = false;
-    private float idleTime;
+    public event Action OnTargetAcquired;
+    public event Action OnTargetLost;
 
-    private Quaternion originalRotation;
-    private Vector3 originalPosition;
+    bool hadTarget;
 
-    void Start()
+    void Awake()
     {
-        InvokeRepeating("UpdateTarget", 0f, 0.5f);
-
-
-    }
-
-    private void Awake()
-    {
-        originalRotation = partToRotate.rotation;
-        originalPosition = partToRotate.position;
-        originalScale = transform.localScale; 
-
         if (!shooting)
             shooting = GetComponent<Shooting>();
     }
 
+    void Start()
+    {
+        InvokeRepeating(nameof(UpdateTarget), 0f, 0.5f);
+    }
+
     void Update()
     {
-        if (enemyTarget != null)
-        {
-            isIdle = false;
-            TurretRotation();
-        }
-        else
-        {
-            if (!isIdle)
-            {
-                ReturnToOriginalRotation();
-            }
-            else
-            {
-                IdleFloat();
-            }
-        }
-       bool shouldEnlarge = enemyTarget != null; // enlarge if we have a target
-        HandleAnticipation(shouldEnlarge);
+        bool hasTarget = enemyTarget != null;
 
+        if (hasTarget)
+            RotateTowardsTarget();
+
+        if (hasTarget && !hadTarget)
+            OnTargetAcquired?.Invoke();
+
+        if (!hasTarget && hadTarget)
+            OnTargetLost?.Invoke();
+
+        hadTarget = hasTarget;
     }
-    void TurretRotation()
+
+    void RotateTowardsTarget()
     {
+        Vector3 dir = enemyTarget.position - partToRotate.position;
+        Quaternion look = Quaternion.LookRotation(dir);
+        Quaternion yOnly = Quaternion.Euler(0f, look.eulerAngles.y, 0f);
 
-        //target direction
-        Vector3 direction = enemyTarget.position - transform.position;
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        Vector3 rotation = lookRotation.eulerAngles;
-
-        //smooth rotation 
-        Quaternion smoothRotation = Quaternion.Euler(0f, rotation.y, 0f);
-        partToRotate.rotation = Quaternion.Lerp(partToRotate.rotation, smoothRotation, Time.deltaTime * rotationSpeed);
-
-    }
-    void ReturnToOriginalRotation()
-    {
-        transform.rotation = Quaternion.Lerp(
-            transform.rotation,
-            originalRotation,
-            rotationSpeed * Time.deltaTime
+        partToRotate.rotation = Quaternion.Lerp(
+            partToRotate.rotation,
+            yOnly,
+            Time.deltaTime * rotationSpeed
         );
-
-        if (Quaternion.Angle(transform.rotation, originalRotation) < 0.1f)
-        {
-            isIdle = true;
-            idleTime = 0f;
-        }
-
-
     }
-
-    void IdleFloat()
-    {
-        idleTime += Time.deltaTime;
-
-        // Vertical float
-        float yOffset = Mathf.Sin(idleTime * floatSpeed) * floatAmplitude;
-        transform.position = originalPosition + Vector3.up * yOffset;
-
-        // Gentle rotation sway (optional but nice)
-        float rotOffset = Mathf.Sin(idleTime * floatSpeed) * idleRotationAmount;
-        transform.rotation = originalRotation * Quaternion.Euler(0f, rotOffset, 0f);
-
-
-    }
-
-    void HandleAnticipation(bool enlarge)
-    {
-        Vector3 targetScale;
-
-        if (scaleOnlyY)
-        {
-            float targetY = enlarge ? enlargedScale.y : originalScale.y;
-            targetScale = new Vector3(originalScale.x, targetY, originalScale.z);
-        }
-        else
-        {
-            targetScale = enlarge ? enlargedScale : originalScale;
-        }
-
-        transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * scaleSpeed);
-    }
-
 
     void UpdateTarget()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
-        float shortestDistance = Mathf.Infinity;
-        GameObject nearestEnemy = null;
+
+        float shortest = Mathf.Infinity;
+        Transform closest = null;
 
         foreach (GameObject enemy in enemies)
         {
-            Vector3 directionToEnemy = (enemy.transform.position - transform.position).normalized;
-            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
-            float dot = Vector3.Dot(transform.forward, directionToEnemy);
+            Vector3 toEnemy = (enemy.transform.position - transform.position).normalized;
+            float distance = Vector3.Distance(transform.position, enemy.transform.position);
+            float dot = Vector3.Dot(transform.forward, toEnemy);
 
-            if (dot >= dotThreshold && distanceToEnemy < shortestDistance)
+            if (dot >= dotThreshold && distance < shortest)
             {
-                shortestDistance = distanceToEnemy;
-                nearestEnemy = enemy;
+                shortest = distance;
+                closest = enemy.transform;
             }
         }
-        if (nearestEnemy != null && shortestDistance <= range)
+
+        if (closest && shortest <= range)
         {
-            enemyTarget = nearestEnemy.transform;
+            enemyTarget = closest;
             shooting.StartFiring();
         }
         else
@@ -165,23 +93,4 @@ public class Turret : MonoBehaviour
             shooting.StopFiring();
         }
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, range);
-
-        float clampedDot = Mathf.Clamp(dotThreshold, -1f, 1f);
-
-        // Convert dot threshold to angle
-        float halfFOV = Mathf.Acos(dotThreshold) * Mathf.Rad2Deg;
-
-        Vector3 leftDir = Quaternion.Euler(0, -halfFOV, 0) * transform.forward;
-        Vector3 rightDir = Quaternion.Euler(0, halfFOV, 0) * transform.forward;
-
-        Gizmos.DrawLine(transform.position, transform.position + leftDir * range);
-        Gizmos.DrawLine(transform.position, transform.position + rightDir * range);
-    }
-
-
-
 }

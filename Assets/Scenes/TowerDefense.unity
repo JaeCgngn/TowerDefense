@@ -729,13 +729,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.31447247, y: -0, z: -0, w: 0.9492667}
-  m_LocalPosition: {x: 12, y: 37, z: -36.02}
+  m_LocalRotation: {x: 0.15730594, y: -0, z: -0, w: 0.98754996}
+  m_LocalPosition: {x: 12, y: 23.2, z: -44.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 36.658, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 18.101, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1528,7 +1528,7 @@ MonoBehaviour:
     prefab: {fileID: 8909124517617308047, guid: a12e2553c269baa4b83f3b3c46628041, type: 3}
     cost: 0
   Tower:
-    prefab: {fileID: 124785842461189131, guid: e1f980e14595f8840a9458e2afb4f1d9, type: 3}
+    prefab: {fileID: 6030019189419042970, guid: 8502fc543dc40fa448e7f2646b43ce1b, type: 3}
     cost: 0
   Sniper:
     prefab: {fileID: 3692342393883338035, guid: ffa0294d77498f0419814d32f9bcc1b5, type: 3}
