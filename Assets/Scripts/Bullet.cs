@@ -11,6 +11,21 @@ public class Bullet : MonoBehaviour
     [Header("Effects")]
     public GameObject hitEffect;
 
+    [Header("Enemy Settings")]
+    public Enemy enemyHealth;
+    public int damage;
+
+    void Awake()
+    {
+        enemyHealth = FindAnyObjectByType<Enemy>();
+        if (enemyHealth == null)
+        {
+            Debug.LogError("Enemy not found in the scene!");
+        }
+    }
+
+
+
     void Start()
     {
         Destroy(gameObject, lifeTime); // Destroy bullet after its lifetime
@@ -33,8 +48,10 @@ public class Bullet : MonoBehaviour
         BulletMovement();
     }
 
-
-
+    public void SetDamage(int damageAmount)
+    {
+        damage = damageAmount;
+    }
 
 
     void BulletMovement()
@@ -64,7 +81,8 @@ public class Bullet : MonoBehaviour
 
             Destroy(effect, 1f);
         }
-
+        enemyHealth.TakeDamage(damage); 
+        Debug.Log($"Enemy took Damage");
         Destroy(gameObject);
     }
 }

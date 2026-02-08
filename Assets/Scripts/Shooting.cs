@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class Shooting : MonoBehaviour
 {
@@ -22,6 +23,9 @@ public class Shooting : MonoBehaviour
     [Header("Burst Settings")]
     public int bulletsPerShot = 1;        // Number of bullets in the burst
     public float burstDelay = 0.1f;
+
+    [Header("Damage Settings")]
+    public int damage = 5;
 
 
 
@@ -84,8 +88,11 @@ public class Shooting : MonoBehaviour
                 bullet.Seek(turret.enemyTarget);
             }
 
+            bullet.SetDamage(damage);
+            Debug.Log($"Bullet damage set to {damage}");
+
             yield return new WaitForSeconds(burstDelay);
         }
     }
 
-}
+} 
