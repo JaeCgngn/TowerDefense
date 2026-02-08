@@ -14,8 +14,8 @@ public class IdleFloatJuice : MonoBehaviour
 
     void Awake()
     {
-        startPos = transform.position;
-        startRot = transform.rotation;
+        startPos = transform.position; // Store the original position
+        startRot = transform.rotation; // Store the original rotation
 
         if (!turret)
             turret = GetComponentInParent<Turret>();

@@ -57,6 +57,7 @@ public class WaveSpawner : MonoBehaviour
         isSpawning = false;
         countdown = GetNextWaveDelay();
         waveNumber++;
+
     }
 
     float GetNextWaveDelay()

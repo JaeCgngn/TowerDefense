@@ -729,13 +729,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.15730594, y: -0, z: -0, w: 0.98754996}
-  m_LocalPosition: {x: 12, y: 23.2, z: -44.8}
+  m_LocalRotation: {x: 0.28486153, y: -0, z: -0, w: 0.9585687}
+  m_LocalPosition: {x: 12, y: 34.3, z: -37.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 18.101, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 33.101, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2249,19 +2249,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1147107323}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11500000, guid: 5500cc079717fa54ba2a5955aa85d603, type: 3}
-        m_TargetAssemblyTypeName: UnityEditor.MonoScript, UnityEditor.CoreModule
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1147107323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2798,7 +2786,7 @@ MonoBehaviour:
   m_ChildAlignment: 7
   m_StartCorner: 0
   m_StartAxis: 1
-  m_CellSize: {x: 1100, y: 100}
+  m_CellSize: {x: 800, y: 100}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
