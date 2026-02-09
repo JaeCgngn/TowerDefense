@@ -10,7 +10,9 @@ public class Bullet : MonoBehaviour
     private int damage;
 
     public event Action<Transform, int> OnHitTarget;
-    public event Action<GameObject> OnBulletDestroyed;
+    public event Action<Vector3> OnBulletDestroyed;
+
+
 
     private void Start()
     {
@@ -58,7 +60,14 @@ public class Bullet : MonoBehaviour
 
     private void DestroyBullet()
     {
-        OnBulletDestroyed?.Invoke(gameObject);
+        Vector3 pos = transform.position;
+        OnBulletDestroyed?.Invoke(pos);
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        OnHitTarget = null;
+        OnBulletDestroyed = null;
     }
 }

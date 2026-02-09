@@ -2,8 +2,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class ButtonHoverJuice : MonoBehaviour,
-    IPointerEnterHandler,
-    IPointerExitHandler
+    IPointerEnterHandler, // Implementing Unity's pointer event interfaces
+    IPointerExitHandler // Implementing Unity's pointer event interfaces
 {
     [SerializeField] float hoverScale = 1.1f;
     [SerializeField] float speed = 10f;

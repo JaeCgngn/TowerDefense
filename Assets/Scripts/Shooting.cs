@@ -116,11 +116,10 @@ public class Shooting : MonoBehaviour
         }
     }
 
-    private void HandleBulletDestroyed(GameObject bullet)
+    private void HandleBulletDestroyed(Vector3 position)
     {
-        // Example: spawn hit effects / pooling
+        if (BulletEffectManager.Instance == null) return;
 
-        BulletEffectManager.Instance.SpawnHitEffect(bullet.transform.position);
-        Debug.Log("Bullet destroyed: " + bullet.name);
+        BulletEffectManager.Instance.SpawnHitEffect(position);
     }
 }
