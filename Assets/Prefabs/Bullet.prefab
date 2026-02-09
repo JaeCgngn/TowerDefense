@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9085404146535294631}
   - component: {fileID: 6978812913266989944}
   - component: {fileID: 988620488109773209}
+  - component: {fileID: -1307174817595430296}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -128,5 +129,17 @@ MonoBehaviour:
   speed: 20
   lifeTime: 3
   hitEffect: {fileID: 9098113546474163299, guid: 08c9a1ea2968c974587ec3f0a2d1be8c, type: 3}
-  enemyHealth: {fileID: 0}
-  damage: 5
+  damageDealer: {fileID: -1307174817595430296}
+--- !u!114 &-1307174817595430296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5868769877462299888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81704b794f3617c4aadd9acf86faa3c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageDealer
+  damage: 10

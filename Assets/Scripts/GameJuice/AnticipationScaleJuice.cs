@@ -34,11 +34,11 @@ public class AnticipationScaleJuice : MonoBehaviour
     void Enlarge()
     {
         targetScale = scaleOnlyY
-          ? new Vector3(baseScale.x, Mathf.Max(transform.localScale.y, enlargedScale.y), baseScale.z)
+          ? new Vector3(baseScale.x, Mathf.Max(transform.localScale.y, enlargedScale.y), baseScale.z) // Keep X and Z the same, only enlarge Y
           : new Vector3(
-              Mathf.Max(transform.localScale.x, enlargedScale.x),
-              Mathf.Max(transform.localScale.y, enlargedScale.y),
-              Mathf.Max(transform.localScale.z, enlargedScale.z)
+              Mathf.Max(transform.localScale.x, enlargedScale.x), // Enlarge X
+              Mathf.Max(transform.localScale.y, enlargedScale.y), // Enlarge Y
+              Mathf.Max(transform.localScale.z, enlargedScale.z)  // Enlarge Z
             );
     }
 

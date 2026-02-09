@@ -61,6 +61,10 @@ PrefabInstance:
       value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4094169785910487067, guid: a12e2553c269baa4b83f3b3c46628041, type: 3}
+      propertyPath: bulletDamage
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4094169785910487067, guid: a12e2553c269baa4b83f3b3c46628041, type: 3}
       propertyPath: bulletLifetime
       value: 3
       objectReference: {fileID: 0}

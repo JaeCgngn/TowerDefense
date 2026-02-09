@@ -4,13 +4,12 @@ public class ReturnRotationJuice : MonoBehaviour
 {
     [SerializeField] private Turret turret;
     [SerializeField] private float speed = 5f;
-
     Quaternion original;
     bool returning;
 
     void Awake()
     {
-        original = transform.rotation;
+        original = transform.rotation; // Store the original rotation
 
         if (!turret)
             turret = GetComponentInParent<Turret>();

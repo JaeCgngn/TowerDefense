@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4981297130446516959}
   - component: {fileID: 8273801413710658417}
   - component: {fileID: -3446197326154198804}
+  - component: {fileID: -4766782226435854949}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -141,4 +142,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba542f694e8541f4998ba9f57735e547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  hitRadius: 2.5
+  maxHP: 100
+  healthBarPrefab: {fileID: 5742031585772489801, guid: 17088a04d2ea78046940a0a3ed1049e2, type: 3}
+--- !u!114 &-4766782226435854949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5197606378378224977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9c1ec6f02b27d747af62436162cdd8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDeath

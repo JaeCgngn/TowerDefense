@@ -1,98 +1,126 @@
-using UnityEngine;
+using System;
 using System.Collections;
-using Unity.VisualScripting;
+using UnityEngine;
 
 public class Shooting : MonoBehaviour
 {
-    [Header("References ")]
-
+    [Header("References")]
     public GameObject bulletPrefab;
     public Transform firePoint;
 
-    private Turret turret; // Set this to the enemy target later
-
-    Coroutine fireCoroutine;
-    bool isFiring = true;
+    private Turret turret;
+    private Coroutine fireCoroutine;
+    private bool isFiring = false;
 
     [Header("Shooter Settings")]
     public float fireRate = 1f;
-
     public float bulletLifetime = 3f;
     public float bulletSpeed = 20f;
 
+    [Header("Damage Settings")]
+    public int bulletDamage = 1;
+
     [Header("Burst Settings")]
-    public int bulletsPerShot = 1;        // Number of bullets in the burst
+    public int bulletsPerShot = 1;
     public float burstDelay = 0.1f;
 
-    [Header("Damage Settings")]
-    public int damage = 5;
-
-
-
-    void Start()
-    {
-
-        //  StartCoroutine(FireRoutine());
-
-    }
+    public event Action OnStartFiring;
+    public event Action OnStopFiring;
+    public event Action<GameObject> OnBulletFired;
 
     private void Awake()
     {
         turret = GetComponent<Turret>();
     }
 
-
-    public IEnumerator FireRoutine()
+    private void OnEnable()
     {
-        Debug.Log("Fire Routine Started");
+        turret.OnTargetAcquired += StartFiring;
+        turret.OnTargetLost += StopFiring;
+
+    }
+
+    private void OnDisable()
+    {
+        turret.OnTargetAcquired -= StartFiring;
+        turret.OnTargetLost -= StopFiring;
+    }
+
+    public void StartFiring()
+    {
+        if (turret.enemyTarget == null)
+            return;
+
+        if (fireCoroutine != null) return;
+
+        isFiring = true;
+        fireCoroutine = StartCoroutine(FireRoutine());
+        OnStartFiring?.Invoke();
+    }
+
+    public void StopFiring()
+    {
+        isFiring = false;
+        if (fireCoroutine != null)
+        {
+            StopCoroutine(fireCoroutine);
+            fireCoroutine = null;
+        }
+        OnStopFiring?.Invoke();
+    }
+
+    private IEnumerator FireRoutine()
+    {
+        yield return new WaitForSeconds(fireRate);
 
         while (isFiring)
         {
             yield return StartCoroutine(FireBullet());
             yield return new WaitForSeconds(fireRate);
         }
-
         fireCoroutine = null;
     }
 
-    public void StartFiring()
-    {
-        if (fireCoroutine != null) return;
-
-        isFiring = true;
-        fireCoroutine = StartCoroutine(FireRoutine());
-    }
-
-    public void StopFiring()
-    {
-        isFiring = false;
-    }
-
-
     private IEnumerator FireBullet()
     {
-        Debug.Log("Bullet Fired");
-
         for (int i = 0; i < bulletsPerShot; i++)
         {
-            Vector3 bulletDirection = firePoint.forward;
-            Quaternion bulletRotation = Quaternion.LookRotation(bulletDirection);
-
-            GameObject bulletObj = Instantiate(bulletPrefab, firePoint.position, bulletRotation);
+            GameObject bulletObj = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             Bullet bullet = bulletObj.GetComponent<Bullet>();
 
             if (bullet != null)
             {
-                bullet.speed = bulletSpeed;
-                bullet.lifeTime = bulletLifetime;
-                bullet.Seek(turret.enemyTarget);
+                bullet.Initialize(
+                    turret.enemyTarget,
+                    bulletDamage,
+                    bulletSpeed,
+                    bulletLifetime
+                );
+
+                bullet.OnHitTarget += HandleBulletHit;
+                bullet.OnBulletDestroyed += HandleBulletDestroyed;
             }
 
-            bullet.SetDamage(damage);
-            Debug.Log($"Bullet damage set to {damage}");
-
+            OnBulletFired?.Invoke(bulletObj);
             yield return new WaitForSeconds(burstDelay);
         }
     }
 
-} 
+    private void HandleBulletHit(Transform target, int damage)
+    {
+        // Example: call enemy damage system
+        EnemyHealth enemy = target.GetComponent<EnemyHealth>();
+        if (enemy != null)
+        {
+            enemy.TakeDamage(damage);
+        }
+    }
+
+    private void HandleBulletDestroyed(GameObject bullet)
+    {
+        // Example: spawn hit effects / pooling
+
+        BulletEffectManager.Instance.SpawnHitEffect(bullet.transform.position);
+        Debug.Log("Bullet destroyed: " + bullet.name);
+    }
+}

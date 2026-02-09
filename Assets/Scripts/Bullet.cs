@@ -1,65 +1,47 @@
+using System;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
     public float speed = 20f;
     public float lifeTime = 3f;
-    private Transform enemyTarget;
 
-    private Vector3 moveDirection;
+    private Transform target;
+    private int damage;
 
-    [Header("Effects")]
-    public GameObject hitEffect;
+    public event Action<Transform, int> OnHitTarget;
+    public event Action<GameObject> OnBulletDestroyed;
 
-    [Header("Enemy Settings")]
-    public Enemy enemyHealth;
-    public int damage;
-
-    void Awake()
+    private void Start()
     {
-        enemyHealth = FindAnyObjectByType<Enemy>();
-        if (enemyHealth == null)
+        Destroy(gameObject, lifeTime);
+    }
+
+    public void Initialize(Transform _target, int _damage, float _speed, float _lifeTime)
+    {
+        target = _target;
+        damage = _damage;
+        speed = _speed;
+        lifeTime = _lifeTime;
+    }
+
+    private void Update()
+    {
+        if (target == null)
         {
-            Debug.LogError("Enemy not found in the scene!");
-        }
-    }
-
-
-
-    void Start()
-    {
-        Destroy(gameObject, lifeTime); // Destroy bullet after its lifetime
-    }
-
-    public void Seek(Transform _target)
-    {
-        enemyTarget = _target;
-    }
-
-
-    void Update()
-    {
-        if (enemyTarget == null)
-        {
-            Destroy(gameObject);
+            DestroyBullet();
             return;
         }
 
-        BulletMovement();
+        MoveToTarget();
     }
 
-    public void SetDamage(int damageAmount)
+    private void MoveToTarget()
     {
-        damage = damageAmount;
-    }
-
-
-    void BulletMovement()
-    {
-        Vector3 dir = enemyTarget.position - transform.position;
+        Vector3 dir = target.position - transform.position;
         float distanceThisFrame = speed * Time.deltaTime;
 
-        if (dir.magnitude <= distanceThisFrame) 
+        if (dir.magnitude <= distanceThisFrame)
         {
             HitTarget();
             return;
@@ -68,21 +50,15 @@ public class Bullet : MonoBehaviour
         transform.Translate(dir.normalized * distanceThisFrame, Space.World);
     }
 
-    void HitTarget()
+    private void HitTarget()
     {
-        // Logic for when the bullet hits a target
+        OnHitTarget?.Invoke(target, damage);
+        DestroyBullet();
+    }
 
-
-        Debug.Log("Bullet hit the target!");
-
-        if (hitEffect != null)
-        {
-            GameObject effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
-
-            Destroy(effect, 1f);
-        }
-        enemyHealth.TakeDamage(damage); 
-        Debug.Log($"Enemy took Damage");
+    private void DestroyBullet()
+    {
+        OnBulletDestroyed?.Invoke(gameObject);
         Destroy(gameObject);
     }
 }

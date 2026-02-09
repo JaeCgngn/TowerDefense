@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Turret : MonoBehaviour
 {
@@ -17,10 +18,11 @@ public class Turret : MonoBehaviour
     [Range(-1f, 1f)]
     [SerializeField] private float dotThreshold = 0.7f;
 
+
+    private bool hadTarget;
     public event Action OnTargetAcquired;
     public event Action OnTargetLost;
 
-    bool hadTarget;
 
     void Awake()
     {
@@ -79,18 +81,30 @@ public class Turret : MonoBehaviour
             {
                 shortest = distance;
                 closest = enemy.transform;
-            }
-        }
+            } // Only consider enemies that are within the dot threshold and closer than the current closest
 
-        if (closest && shortest <= range)
+
+        }
+        bool hadTarget = enemyTarget != null;
+
+        if (closest != null && shortest <= range) // Check if we found a valid target within range
         {
             enemyTarget = closest;
-            shooting.StartFiring();
+
+            if (!hadTarget)
+                OnTargetAcquired?.Invoke();
         }
         else
         {
             enemyTarget = null;
-            shooting.StopFiring();
+
+            if (hadTarget)
+                OnTargetLost?.Invoke();
+
         }
     }
+
+
 }
+
+
