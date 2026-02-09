@@ -159,7 +159,6 @@ GameObject:
   - component: {fileID: 4094169785910487067}
   - component: {fileID: 8765400392542561758}
   - component: {fileID: -524563112015002278}
-  - component: {fileID: 2399461256394910212}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Untagged
@@ -311,17 +310,3 @@ MonoBehaviour:
   amplitude: 0.4
   speed: 2
   rotationAmount: 2
---- !u!114 &2399461256394910212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8909124517617308047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22ab6c07b128fbb499258fcd74ccc815, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ReturnRotationJuice
-  turret: {fileID: 0}
-  speed: 5

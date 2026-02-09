@@ -76,6 +76,10 @@ PrefabInstance:
       propertyPath: dotThreshold
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4349810623501664004, guid: a12e2553c269baa4b83f3b3c46628041, type: 3}
+      propertyPath: rotationSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7853762316212769411, guid: a12e2553c269baa4b83f3b3c46628041, type: 3}
       propertyPath: m_LocalScale.z
       value: 1.7330228

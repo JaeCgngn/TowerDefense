@@ -2,60 +2,48 @@ using UnityEngine;
 
 public class IdleFloatJuice : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private Turret turret;
-    [SerializeField] private float amplitude = 0.1f;
-    [SerializeField] private float speed = 2f;
-    [SerializeField] private float rotationAmount = 2f;
 
-    Vector3 startPos;
-    Quaternion startRot;
-    bool active;
-    float time;
+    [Header("Idle Float Settings")]
+    [SerializeField] private float floatAmount = 0.5f;
+    [SerializeField] private float floatSpeed = 1f;
 
-    void Awake()
+    private Vector3 startPos;
+    private bool isIdle = false;
+
+    void Start()
     {
-        startPos = transform.position; // Store the original position
-        startRot = transform.rotation; // Store the original rotation
-
         if (!turret)
-            turret = GetComponentInParent<Turret>();
+            turret = GetComponent<Turret>();
+
+        startPos = transform.localPosition;
+
+        // Subscribe to turret events
+        turret.OnRotateTowardsTarget += DisableIdle;
+        turret.OnRotateBackToRest += EnableIdleIfNoTarget;
     }
 
-    void OnEnable()
+    void Update()
     {
-        turret.OnTargetLost += Enable;
-        turret.OnTargetAcquired += Disable;
+        if (isIdle)
+        {
+            // Floating animation
+            float newY = startPos.y + Mathf.Sin(Time.time * floatSpeed) * floatAmount;
+            transform.localPosition = new Vector3(startPos.x, newY, startPos.z);
+        }
     }
 
-    void OnDisable()
+    private void DisableIdle()
     {
-        turret.OnTargetLost -= Enable;
-        turret.OnTargetAcquired -= Disable;
+        isIdle = false;
+        transform.localPosition = startPos; // reset position
     }
 
-    void Enable()
+    private void EnableIdleIfNoTarget()
     {
-        time = 0f;
-        active = true;
-    }
-
-    void Disable()
-    {
-        active = false;
-        transform.position = startPos;
-        transform.rotation = startRot;
-    }
-
-    void LateUpdate()
-    {
-        if (!active) return;
-
-        time += Time.deltaTime;
-
-        float y = Mathf.Sin(time * speed) * amplitude;
-        float rot = Mathf.Sin(time * speed) * rotationAmount;
-
-        transform.position = startPos + Vector3.up * y;
-        transform.rotation = startRot * Quaternion.Euler(0f, rot, 0f);
+        // Enable idle ONLY if there is no target
+        if (turret.enemyTarget == null)
+            isIdle = true;
     }
 }

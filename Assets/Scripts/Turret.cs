@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Turret : MonoBehaviour
 {
@@ -18,11 +17,17 @@ public class Turret : MonoBehaviour
     [Range(-1f, 1f)]
     [SerializeField] private float dotThreshold = 0.7f;
 
-
+    private bool returning;
+    private Quaternion restRotation;
     private bool hadTarget;
+
+    // Existing events
     public event Action OnTargetAcquired;
     public event Action OnTargetLost;
 
+    // ✅ NEW events
+    public event Action OnRotateTowardsTarget;
+    public event Action OnRotateBackToRest;
 
     void Awake()
     {
@@ -33,6 +38,7 @@ public class Turret : MonoBehaviour
     void Start()
     {
         InvokeRepeating(nameof(UpdateTarget), 0f, 0.5f);
+        restRotation = partToRotate.rotation;
     }
 
     void Update()
@@ -40,13 +46,30 @@ public class Turret : MonoBehaviour
         bool hasTarget = enemyTarget != null;
 
         if (hasTarget)
+        {
+            returning = false;
             RotateTowardsTarget();
 
+            // ✅ Trigger rotating-towards-target event
+            OnRotateTowardsTarget?.Invoke();
+        }
+        else if (returning)
+        {
+            RotateBackToRest();
+
+            // ✅ Trigger rotating-back-to-rest event
+            OnRotateBackToRest?.Invoke();
+        }
+
+        // ONLY trigger target events here
         if (hasTarget && !hadTarget)
             OnTargetAcquired?.Invoke();
 
         if (!hasTarget && hadTarget)
+        {
+            returning = true;
             OnTargetLost?.Invoke();
+        }
 
         hadTarget = hasTarget;
     }
@@ -81,30 +104,25 @@ public class Turret : MonoBehaviour
             {
                 shortest = distance;
                 closest = enemy.transform;
-            } // Only consider enemies that are within the dot threshold and closer than the current closest
-
-
+            }
         }
-        bool hadTarget = enemyTarget != null;
 
-        if (closest != null && shortest <= range) // Check if we found a valid target within range
-        {
+        // Only update the target here
+        if (closest != null && shortest <= range)
             enemyTarget = closest;
-
-            if (!hadTarget)
-                OnTargetAcquired?.Invoke();
-        }
         else
-        {
             enemyTarget = null;
-
-            if (hadTarget)
-                OnTargetLost?.Invoke();
-
-        }
     }
 
+    void RotateBackToRest()
+    {
+        partToRotate.rotation = Quaternion.Slerp(
+            partToRotate.rotation,
+            restRotation,
+            Time.deltaTime * rotationSpeed
+        );
 
+        if (Quaternion.Angle(partToRotate.rotation, restRotation) < 0.1f)
+            partToRotate.rotation = restRotation;
+    }
 }
-
-
