@@ -3004,6 +3004,7 @@ GameObject:
   - component: {fileID: 1468003319}
   - component: {fileID: 1468003318}
   - component: {fileID: 1468003320}
+  - component: {fileID: 1468003321}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3107,6 +3108,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 408695d43d2a6544d94bfce3882efeba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!114 &1468003321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468003317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2966c2aaf8080a947a5631af91a4d9b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BulletEffectManager
+  hitEffectPrefab: {fileID: 9098113546474163299, guid: 08c9a1ea2968c974587ec3f0a2d1be8c, type: 3}
+  effectLifetime: 1
 --- !u!1001 &1468076348
 PrefabInstance:
   m_ObjectHideFlags: 0
