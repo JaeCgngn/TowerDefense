@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 3485832705370092112}
   - component: {fileID: 8598251430905845895}
   - component: {fileID: 4981297130446516959}
-  - component: {fileID: 8273801413710658417}
   - component: {fileID: -3446197326154198804}
   - component: {fileID: -4766782226435854949}
+  - component: {fileID: 5178371725749735989}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -117,19 +117,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8273801413710658417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5197606378378224977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3b9b3ca4aaf9cc489f1675c0b56c18c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
-  speed: 5
 --- !u!114 &-3446197326154198804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,3 +143,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c1ec6f02b27d747af62436162cdd8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDeath
+--- !u!114 &5178371725749735989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5197606378378224977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180aae49d2aee5e429b6242e2f8f0bf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FollowRoute
+  routes:
+  - {fileID: 0}

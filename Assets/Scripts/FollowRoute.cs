@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class FollowRoute : MonoBehaviour
 {
     [SerializeField]
-    private Transform[] routes;
+    public Transform[] routes;
 
     private int routeToGo;
 
@@ -24,6 +24,7 @@ public class FollowRoute : MonoBehaviour
         speedModifier = 0.5f;
         coroutineAllowed = true;
     }
+
 
     // Update is called once per frame
     void Update()
@@ -60,6 +61,7 @@ public class FollowRoute : MonoBehaviour
         if (routeToGo > routes.Length - 1)
         {
             routeToGo = 0;
+            Destroy(gameObject);
         }
 
         coroutineAllowed = true;
