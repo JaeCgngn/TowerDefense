@@ -15,6 +15,9 @@ public class EnemyHealthBar : MonoBehaviour
 
     private Coroutine showCoroutine;
 
+    [SerializeField] private float lerpSpeed = 5f;
+    private float targetHealth;
+
     private void Awake()
     {
         // Auto-find CanvasGroup
@@ -35,10 +38,28 @@ public class EnemyHealthBar : MonoBehaviour
         UpdateHealth(enemyHealth.CurrentHP, enemyHealth.MaxHP);
     }
 
+    private void Update()
+    {
+        if (healthSlider.value != targetHealth)
+        {
+            healthSlider.value = Mathf.Lerp(
+                healthSlider.value,
+                targetHealth,
+                lerpSpeed * Time.deltaTime
+            );
+
+            // Snap when very close (prevents endless tiny movement)
+            if (Mathf.Abs(healthSlider.value - targetHealth) < 0.01f)
+            {
+                healthSlider.value = targetHealth;
+            }
+        }
+    }
+
     private void UpdateHealth(int current, int max)
     {
         healthSlider.maxValue = max;
-        healthSlider.value = current;
+        targetHealth = current;
 
 
         // Only show once
