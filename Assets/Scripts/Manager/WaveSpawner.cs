@@ -73,11 +73,12 @@ public class WaveSpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-
-
         Debug.Log("Spawning Enemy!");
         Instantiate(enemyPrefab, SpawnPoint.position, SpawnPoint.rotation);
 
+        // Transform enemyTransform = Instantiate(enemyPrefab, SpawnPoint.position, SpawnPoint.rotation);
+        // EnemyHealth enemy = enemyTransform.GetComponent<EnemyHealth>();
+        // UIManager.Instance.RegisterEnemy(enemy);
 
     }
 

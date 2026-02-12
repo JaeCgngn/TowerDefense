@@ -309,7 +309,7 @@ MonoBehaviour:
   fireRate: 1
   bulletLifetime: 3
   bulletSpeed: 20
-  bulletDamage: 20
+  bulletDamage: 5
   bulletsPerShot: 3
   burstDelay: 0.1
 --- !u!114 &700250771355769330
@@ -330,7 +330,7 @@ MonoBehaviour:
   range: 10
   rotationSpeed: 5
   enemyTag: Enemy
-  dotThreshold: 0.7
+  dotThreshold: -1
 --- !u!114 &6681887618383022527
 MonoBehaviour:
   m_ObjectHideFlags: 0

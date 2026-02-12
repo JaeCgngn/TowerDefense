@@ -275,7 +275,7 @@ MonoBehaviour:
   fireRate: 1
   bulletLifetime: 1
   bulletSpeed: 20
-  bulletDamage: 20
+  bulletDamage: 5
   bulletsPerShot: 1
   burstDelay: 0.1
 --- !u!114 &8765400392542561758
@@ -307,6 +307,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IdleFloatJuice
   turret: {fileID: 0}
-  amplitude: 0.4
-  speed: 2
-  rotationAmount: 2
+  floatAmount: 0.5
+  floatSpeed: 1

@@ -3,6 +3,8 @@ using UnityEngine.EventSystems;
 public class EnemyDeath : MonoBehaviour
 {
     private EnemyHealth health;
+    // public GameObject coinPrefab; 
+    // public int coinsToDrop = 5; 
 
     private void Awake()
     {
@@ -18,6 +20,15 @@ public class EnemyDeath : MonoBehaviour
     private void HandleDeath()
     {
         if (health == null || health.CurrentHP > 0) return; // Check if health is null or still alive
+        // DropCoin(); 
         Destroy(gameObject);
     }
+
+    // public void DropCoin()
+    // {
+    //     for (int i = 0; i < coinsToDrop; i++)
+    //     {
+    //         Instantiate(coinPrefab, transform.position, Quaternion.identity);
+    //     }
+    // }
 }
