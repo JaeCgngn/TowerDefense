@@ -157,3 +157,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FollowRoute
   routes:
   - {fileID: 0}
+  speedModifier: 0.2

@@ -12,21 +12,17 @@ public class FollowRoute : MonoBehaviour
 
     private Vector3 objectPosition;
 
-    private float speedModifier;
-
+    public float speedModifier = 0.5f;
     private bool coroutineAllowed;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         routeToGo = 0;
         tParam = 0f;
-        speedModifier = 0.5f;
         coroutineAllowed = true;
     }
 
-
-    // Update is called once per frame
     void Update()
     {
         if (coroutineAllowed)
@@ -39,29 +35,44 @@ public class FollowRoute : MonoBehaviour
     {
         coroutineAllowed = false;
 
-        Vector3 p0 = routes[routeNum].GetChild(0).position;
-        Vector3 p1 = routes[routeNum].GetChild(1).position;
-        Vector3 p2 = routes[routeNum].GetChild(2).position;
-        Vector3 p3 = routes[routeNum].GetChild(3).position;
+        Transform routeTransform = routes[routeNum];
 
-        while (tParam < 1)
+        // Total segments = (points - 1) / 3
+        int pointCount = routeTransform.childCount;
+        int segments = (pointCount - 1) / 3;
+
+        for (int s = 0; s < segments; s++)
         {
-            tParam += Time.deltaTime * speedModifier;
+            Vector3 p0 = routeTransform.GetChild(s * 3 + 0).position;
+            Vector3 p1 = routeTransform.GetChild(s * 3 + 1).position;
+            Vector3 p2 = routeTransform.GetChild(s * 3 + 2).position;
+            Vector3 p3 = routeTransform.GetChild(s * 3 + 3).position;
 
-            objectPosition = Mathf.Pow(1 - tParam, 3) * p0 + 3 * Mathf.Pow(1 - tParam, 2) * tParam * p1 + 3 * (1 - tParam) * Mathf.Pow(tParam, 2) * p2 + Mathf.Pow(tParam, 3) * p3;
+            float tParam = 0f;
 
-            transform.position = objectPosition;
-            yield return new WaitForEndOfFrame();
+            while (tParam < 1f)
+            {
+                tParam += Time.deltaTime * speedModifier;
+
+                Vector3 objectPosition =
+                    Mathf.Pow(1 - tParam, 3) * p0 +
+                    3 * Mathf.Pow(1 - tParam, 2) * tParam * p1 +
+                    3 * (1 - tParam) * Mathf.Pow(tParam, 2) * p2 +
+                    Mathf.Pow(tParam, 3) * p3;
+
+                transform.position = objectPosition;
+
+                yield return null;
+            }
         }
 
-        tParam = 0;
-        speedModifier = speedModifier * 0.90f;
-        routeToGo += 1;
+        // Finished entire route
+        routeToGo++;
 
-        if (routeToGo > routes.Length - 1)
+        if (routeToGo >= routes.Length)
         {
-            routeToGo = 0;
             Destroy(gameObject);
+            yield break;
         }
 
         coroutineAllowed = true;
