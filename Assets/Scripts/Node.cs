@@ -18,12 +18,12 @@ public class Node : MonoBehaviour
         rend = GetComponent<Renderer>();
         startColor = rend.material.color;
 
-          buildManager = BuildManager.instance;
+        buildManager = BuildManager.instance;
 
     }
 
 
-     void OnMouseDown()
+    void OnMouseDown()
     {
         Debug.Log("Node Clicked: " + gameObject.name);
 
@@ -46,6 +46,8 @@ public class Node : MonoBehaviour
             transform.position + positionOffset,
             Quaternion.identity
         );
+        buildManager.SpawnBuildVFX(this);
+
 
         Debug.Log("Turret placed on node: " + gameObject.name);
     }
@@ -63,7 +65,7 @@ public class Node : MonoBehaviour
         rend.material.color = startColor;
     }
 
-    
+
 
 
 

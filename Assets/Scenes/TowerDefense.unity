@@ -3511,6 +3511,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 408695d43d2a6544d94bfce3882efeba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  buildVFX: {fileID: 3662908785485254787, guid: c4a1f8de5d48011498376222957bb1b7, type: 3}
+  vfxDestroyTime: 2
 --- !u!114 &1468003321
 MonoBehaviour:
   m_ObjectHideFlags: 0

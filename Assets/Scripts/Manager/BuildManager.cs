@@ -4,7 +4,10 @@ using UnityEngine;
 public class BuildManager : MonoBehaviour
 {
 
-     public static BuildManager instance;
+    public static BuildManager instance;
+
+    [SerializeField] private GameObject buildVFX;
+    [SerializeField] private float vfxDestroyTime = 2f;
 
     private GameObject turretToBuild;
 
@@ -27,6 +30,19 @@ public class BuildManager : MonoBehaviour
     public GameObject GetTurretToBuild()
     {
         return turretToBuild;
+    }
+
+    public void SpawnBuildVFX(Node node)
+    {
+        if (buildVFX == null) return;
+
+        GameObject vfx = Instantiate(
+            buildVFX,
+            node.transform.position + node.positionOffset,
+            Quaternion.identity
+        );
+
+        Destroy(vfx, vfxDestroyTime);
     }
 
 

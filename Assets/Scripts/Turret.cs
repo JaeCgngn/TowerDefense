@@ -21,11 +21,11 @@ public class Turret : MonoBehaviour
     private Quaternion restRotation;
     private bool hadTarget;
 
-    // Existing events
+    // Targeting events
     public event Action OnTargetAcquired;
     public event Action OnTargetLost;
 
-    // ✅ NEW events
+    // Rotation events
     public event Action OnRotateTowardsTarget;
     public event Action OnRotateBackToRest;
 
@@ -45,23 +45,20 @@ public class Turret : MonoBehaviour
     {
         bool hasTarget = enemyTarget != null;
 
+        // Rotation events
         if (hasTarget)
         {
             returning = false;
             RotateTowardsTarget();
-
-            // ✅ Trigger rotating-towards-target event
             OnRotateTowardsTarget?.Invoke();
         }
         else if (returning)
         {
             RotateBackToRest();
-
-            // ✅ Trigger rotating-back-to-rest event
             OnRotateBackToRest?.Invoke();
         }
 
-        // ONLY trigger target events here
+        // Target events 
         if (hasTarget && !hadTarget)
             OnTargetAcquired?.Invoke();
 
@@ -85,6 +82,7 @@ public class Turret : MonoBehaviour
             yOnly,
             Time.deltaTime * rotationSpeed
         );
+
     }
 
     void UpdateTarget()
@@ -107,11 +105,11 @@ public class Turret : MonoBehaviour
             }
         }
 
-        // Only update the target here
         if (closest != null && shortest <= range)
             enemyTarget = closest;
         else
             enemyTarget = null;
+
     }
 
     void RotateBackToRest()
