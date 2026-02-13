@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
+
 public class FollowRoute : MonoBehaviour
 {
     [SerializeField]
@@ -15,6 +17,7 @@ public class FollowRoute : MonoBehaviour
     public float speedModifier = 0.5f;
     private bool coroutineAllowed;
 
+    public static event Action OnRouteFinished; 
 
     void Start()
     {
@@ -41,7 +44,7 @@ public class FollowRoute : MonoBehaviour
         int pointCount = routeTransform.childCount;
         int segments = (pointCount - 1) / 3;
 
-        for (int s = 0; s < segments; s++)
+        for (int s = 0; s < segments; s++) 
         {
             Vector3 p0 = routeTransform.GetChild(s * 3 + 0).position;
             Vector3 p1 = routeTransform.GetChild(s * 3 + 1).position;
@@ -68,9 +71,14 @@ public class FollowRoute : MonoBehaviour
 
         // Finished entire route
         routeToGo++;
+       
 
         if (routeToGo >= routes.Length)
         {
+            Debug.Log("Enemy reached the end of the route!");
+
+            OnRouteFinished?.Invoke();
+
             Destroy(gameObject);
             yield break;
         }

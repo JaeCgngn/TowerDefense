@@ -50,4 +50,6 @@ public class UIManager : MonoBehaviour
     {
         goldText.text = "Gold: " + currentGold;
     }
+
+
 }
