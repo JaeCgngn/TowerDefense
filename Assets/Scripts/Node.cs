@@ -27,9 +27,9 @@ public class Node : MonoBehaviour
     {
         Debug.Log("Node Clicked: " + gameObject.name);
 
-        if (turret != null)
+         if (turret != null)
         {
-            Debug.Log("Turret already exists on this node.");
+            Debug.Log("Turret exists: " + turret.name);
             return;
         }
 

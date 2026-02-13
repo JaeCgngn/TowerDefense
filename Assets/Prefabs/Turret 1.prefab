@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 7596498808955379479}
   - component: {fileID: 817414555151626543}
   m_Layer: 0
-  m_Name: Turret
+  m_Name: Turret 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -217,7 +217,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 834c5059ae6fce44eb8b768dcc02ddcd, type: 2}
+  - {fileID: 2100000, guid: 457d477cfd829d04faa88bcc362c1a6c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
