@@ -34,15 +34,15 @@ public class BuildManager : MonoBehaviour
     public void BuildTurretOn(Node node)
     {
         // Check if we have enough money to build the turret
-        if (PlayerStats.Money < turretToBuild.cost)
+        if (PlayerStats.Instance.Money < turretToBuild.cost)
         {
             Debug.Log("Not enough money to build " + turretToBuild.prefab.name);
             return;
         }
 
         // Deduct the cost of the turret from the player's money
-        PlayerStats.Money -= turretToBuild.cost;
-        Debug.Log("Built " + turretToBuild.prefab.name + ". Remaining money: " + PlayerStats.Money);
+        PlayerStats.Instance.SpendMoney(turretToBuild.cost);
+        Debug.Log("Built " + turretToBuild.prefab.name + ". Remaining money: " + PlayerStats.Instance.Money);
 
 
         // Check if a turret is selected to build   

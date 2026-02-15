@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -22,6 +23,10 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private float maxWaveDelay = 10f;
     public int maxEnemiesPerWave = 20;
 
+    public static event Action<int> OnWaveStarted;
+    public static event Action<float> OnCountdownUpdated;
+
+
     void Update()
     {
 
@@ -32,9 +37,13 @@ public class WaveSpawner : MonoBehaviour
         {
             StartCoroutine(SpawnWave());
             isSpawning = true;
+
+            OnWaveStarted?.Invoke(waveNumber);
+            return;
         }
 
         countdown -= Time.deltaTime;
+        OnCountdownUpdated?.Invoke(countdown);
     }
 
     IEnumerator SpawnWave()

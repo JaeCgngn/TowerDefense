@@ -14,12 +14,12 @@ public class PlayerHealthManager : MonoBehaviour
 
     private void OnEnable()
     {
-            FollowRoute.OnRouteFinished += HandleRouteFinished;
+        FollowRoute.OnRouteFinished += HandleRouteFinished;
     }
 
     private void OnDisable()
     {
-            FollowRoute.OnRouteFinished -= HandleRouteFinished;
+        FollowRoute.OnRouteFinished -= HandleRouteFinished;
     }
 
     private void HandleRouteFinished()
@@ -28,8 +28,8 @@ public class PlayerHealthManager : MonoBehaviour
         playerhealth -= 1;
         Debug.Log("Player health: " + playerhealth);
         PlayerUpdateHealthUI();
-       // Camera.main.GetComponent<CameraShake>().Shake(0.2f, 0.3f);
-        
+        // Camera.main.GetComponent<CameraShake>().Shake(0.2f, 0.3f);
+
     }
 
     public void PlayerUpdateHealthUI()

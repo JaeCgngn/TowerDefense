@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class CoinMovement : MonoBehaviour
 {
+
+    public int coinValue = 5;
     public float duration = 0.7f;
     public Transform coinTarget;
 
@@ -45,7 +47,7 @@ public class CoinMovement : MonoBehaviour
 
     void ReachTarget()
     {
-        UIManager.Instance.AddGold(5); // Add gold to the player's total when the coin reaches the target
+        PlayerStats.Instance.AddMoney(coinValue);
         Destroy(gameObject);
     }
 }

@@ -3,53 +3,50 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-
     public static UIManager Instance;
-
-    public int currentGold = 0;
-    public int coinValue = 5;
 
     [Header("UI")]
     public TextMeshProUGUI goldText;
+    public TextMeshProUGUI waveText;
+    public TextMeshProUGUI countdownText;
+
+
 
     private void Awake()
     {
         Instance = this;
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
-        UpdateGoldUI();
+        // Subscribe to static wave event — no reference needed
+        WaveSpawner.OnWaveStarted += UpdateWaveUI;
+        WaveSpawner.OnCountdownUpdated += UpdateCountdownUI;
+        PlayerStats.Instance.OnMoneyChanged += UpdateGoldUI;
+        UpdateGoldUI(PlayerStats.Instance.Money);
+
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-        
+        WaveSpawner.OnWaveStarted -= UpdateWaveUI;
+        PlayerStats.Instance.OnMoneyChanged -= UpdateGoldUI;
     }
 
-    public void RegisterEnemy(EnemyHealth enemy)
+    void UpdateGoldUI(int newAmount)
     {
-        enemy.OnDeath += HandleEnemyDeath;
+        goldText.text = "Gold: " + newAmount;
     }
 
-    void HandleEnemyDeath()
+    private void UpdateCountdownUI(float countdown)
     {
-        AddGold(coinValue);
-    }
-
-    public void AddGold(int amount)
-    {
-        currentGold += amount;
-        UpdateGoldUI();
-        Debug.Log("Added " + amount + " gold. Current gold: " + currentGold);
-    }
-
-    void UpdateGoldUI()
-    {
-        goldText.text = "Gold: " + currentGold;
+        // Display countdown rounded to 1 decimal
+        countdownText.text = countdown.ToString("F1");
     }
 
 
+    void UpdateWaveUI(int waveNumber)
+    {
+        waveText.text = waveNumber.ToString("D2");
+    }
 }
