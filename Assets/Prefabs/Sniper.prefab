@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnticipationScaleJuice
   turret: {fileID: 0}
-  enlargedScale: {x: 2.2, y: 2.2, z: 2.2}
+  enlargedScale: {x: 2.4, y: 2.4, z: 2.4}
   speed: 6
   scaleOnlyY: 0
 --- !u!114 &4875942778400546152
