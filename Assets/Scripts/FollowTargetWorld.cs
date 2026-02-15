@@ -11,5 +11,6 @@ public class FollowTargetWorld : MonoBehaviour
 
         transform.position = target.position + offset;
         transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward);
+
     }
 }

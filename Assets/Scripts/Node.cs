@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Node : MonoBehaviour
 {
 
-    private GameObject turret;
+    public GameObject turret;
 
     public Vector3 positionOffset;
     public Color hoverColor;
@@ -22,39 +23,44 @@ public class Node : MonoBehaviour
 
     }
 
+    public Vector3 GetBuildPosition()
+    {
+        return transform.position + positionOffset;
+    }
 
     void OnMouseDown()
     {
-        Debug.Log("Node Clicked: " + gameObject.name);
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
 
-         if (turret != null)
+
+
+        if (!buildManager.CanBuild) // Check if we can build
+        {
+
+            return;
+        }
+
+        if (turret != null) // Check if there is already a turret on this node
         {
             Debug.Log("Turret exists: " + turret.name);
             return;
         }
-
-        GameObject turretToBuild = buildManager.GetTurretToBuild();
-
-        if (turretToBuild == null)
-        {
-            Debug.Log("No turret selected to build.");
-            return;
-        }
-
-        turret = Instantiate(
-            turretToBuild,
-            transform.position + positionOffset,
-            Quaternion.identity
-        );
+        buildManager.BuildTurretOn(this);
         buildManager.SpawnBuildVFX(this);
-
-
-        Debug.Log("Turret placed on node: " + gameObject.name);
     }
 
     void OnMouseEnter()
     {
-        Debug.Log("Mouse Entered Node: " + gameObject.name);
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
+        if (!buildManager.CanBuild)
+        {
+            return;
+        }
 
         rend.material.color = hoverColor;
     }

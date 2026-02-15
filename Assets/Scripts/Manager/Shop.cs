@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
-    public TurretBlueprint Turret;
+    public TurretBlueprint standardTurret;
     public TurretBlueprint Tower;
     public TurretBlueprint Sniper;
 
@@ -16,7 +16,7 @@ public class Shop : MonoBehaviour
     public void SelectTurret()
     {
         Debug.Log("Turret Selected");
-        buildManager.SelectTurretToBuild(Turret);
+        buildManager.SelectTurretToBuild(standardTurret);
     }
 
     public void SelectTower()

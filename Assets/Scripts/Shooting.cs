@@ -7,7 +7,6 @@ public class Shooting : MonoBehaviour
     [Header("References")]
     public GameObject bulletPrefab;
     public Transform firePoint;
-
     private Turret turret;
     private Coroutine fireCoroutine;
     private bool isFiring = false;
@@ -23,7 +22,6 @@ public class Shooting : MonoBehaviour
     [Header("Burst Settings")]
     public int bulletsPerShot = 1;
     public float burstDelay = 0.1f;
-
     public event Action OnStartFiring;
     public event Action OnStopFiring;
     public event Action<GameObject> OnBulletFired;
@@ -108,8 +106,7 @@ public class Shooting : MonoBehaviour
 
     private void HandleBulletHit(Transform target, int damage)
     {
-        // Example: call enemy damage system
-        EnemyHealth enemy = target.GetComponent<EnemyHealth>();
+        EnemyHealth enemy = target.GetComponent<EnemyHealth>(); //Get EnemyHealth component from the hit target
         if (enemy != null)
         {
             enemy.TakeDamage(damage);

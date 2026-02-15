@@ -8,14 +8,11 @@ public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private int maxHP = 100;
 
-
     public int MaxHP => maxHP;
-    public int CurrentHP { get; private set; }
+    public int CurrentHP { get; private set; } // 
 
-
-
-    // Events
-    public event Action<int, int> OnHealthChanged; // current, max
+    // Events 
+    public event Action<int, int> OnHealthChanged; // Passing currentHP, maxHP Value
     public event Action OnDeath;
 
     [SerializeField] private GameObject healthBarPrefab;

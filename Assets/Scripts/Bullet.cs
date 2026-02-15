@@ -12,8 +12,6 @@ public class Bullet : MonoBehaviour
     public event Action<Transform, int> OnHitTarget;
     public event Action<Vector3> OnBulletDestroyed;
 
-
-
     private void Start()
     {
         Destroy(gameObject, lifeTime);

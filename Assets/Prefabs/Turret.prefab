@@ -159,7 +159,6 @@ GameObject:
   - component: {fileID: 4094169785910487067}
   - component: {fileID: 8765400392542561758}
   - component: {fileID: -524563112015002278}
-  - component: {fileID: 7596498808955379479}
   - component: {fileID: 817414555151626543}
   m_Layer: 0
   m_Name: Turret
@@ -311,20 +310,6 @@ MonoBehaviour:
   turret: {fileID: 0}
   floatAmount: 0.5
   floatSpeed: 1
---- !u!114 &7596498808955379479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8909124517617308047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22b88aba8f337054eb5ca50ec97b4f30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TurretUpgrade
-  uiOffset: {x: 0, y: 4, z: 0}
-  hoverColor: {r: 0.48979196, g: 0.9339623, b: 0.24230155, a: 1}
 --- !u!65 &817414555151626543
 BoxCollider:
   m_ObjectHideFlags: 0
