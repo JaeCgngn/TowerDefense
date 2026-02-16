@@ -22,4 +22,10 @@ public class NodeUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void Upgrade()
+    {
+        target.UpgradeTurret();
+        BuildManager.instance.DeselectNode();
+    }
+
 }

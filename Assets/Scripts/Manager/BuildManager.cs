@@ -1,6 +1,4 @@
 
-using System.ComponentModel;
-using System.Xml;
 using UnityEngine;
 
 public class BuildManager : MonoBehaviour
@@ -30,6 +28,7 @@ public class BuildManager : MonoBehaviour
     private Node selectedNode;
     public bool CanBuild { get { return turretToBuild != null; } }
 
+
     public void SelectNode(Node node)
     {
 
@@ -40,7 +39,7 @@ public class BuildManager : MonoBehaviour
         }
 
         selectedNode = node;
-        turretToBuild = null;
+
 
         nodeUI.SetTarget(node);
     }
@@ -62,31 +61,12 @@ public class BuildManager : MonoBehaviour
         DeselectNode();
     }
 
-    public void BuildTurretOn(Node node)
+    public TurretBlueprint GetTurretToBuild()
     {
-
-        // Check if a turret is selected to build   
-        if (turretToBuild == null)
-        {
-            Debug.LogError("No turret selected to build.");
-            return;
-        }
-
-        // Check if we have enough money to build the turret
-        if (PlayerStats.Instance.Money < turretToBuild.cost)
-        {
-            Debug.Log("Not enough money to build " + turretToBuild.prefab.name);
-            return;
-        }
-
-        // Deduct the cost of the turret from the player's money
-        PlayerStats.Instance.SpendMoney(turretToBuild.cost);
-        Debug.Log("Built " + turretToBuild.prefab.name + ". Remaining money: " + PlayerStats.Instance.Money);
-
-        // Instantiate the turret on the node
-        GameObject turret = Instantiate(turretToBuild.prefab, node.GetBuildPosition(), Quaternion.identity);
-        node.turret = turret;
+        return turretToBuild;
     }
+
+
 
     public void SpawnBuildVFX(Node node)
     {
