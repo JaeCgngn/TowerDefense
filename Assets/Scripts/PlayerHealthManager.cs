@@ -13,6 +13,11 @@ public class PlayerHealthManager : MonoBehaviour
         PlayerUpdateHealthUI();
     }
 
+    void Update()
+    {
+        PlayerDeath();
+    }
+
     private void OnEnable()
     {
         FollowRoute.OnRouteFinished += HandleRouteFinished;
