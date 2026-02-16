@@ -382,7 +382,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170260446}
   m_LocalRotation: {x: 0.2588186, y: -0, z: -0, w: 0.965926}
-  m_LocalPosition: {x: 0, y: 0, z: 20}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -391,7 +391,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0456, y: 9.6942}
+  m_AnchoredPosition: {x: 0, y: 7}
   m_SizeDelta: {x: 2, y: 1.5171}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &170260448
@@ -1679,7 +1679,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 443707583}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2004476425}
+        m_TargetAssemblyTypeName: NodeUI, Assembly-CSharp
+        m_MethodName: Upgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &443707583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2411,12 +2423,18 @@ MonoBehaviour:
   standardTurret:
     prefab: {fileID: 8909124517617308047, guid: a12e2553c269baa4b83f3b3c46628041, type: 3}
     cost: 50
+    upgradedPrefab: {fileID: 4655972096231869356, guid: be8372ceb861642408fc97ea539a9b44, type: 3}
+    UpgradeCost: 100
   Tower:
     prefab: {fileID: 6030019189419042970, guid: 8502fc543dc40fa448e7f2646b43ce1b, type: 3}
     cost: 50
+    upgradedPrefab: {fileID: 0}
+    UpgradeCost: 0
   Sniper:
     prefab: {fileID: 1106856641970402636, guid: ac9c85023d6a81041a9c977387e904c7, type: 3}
     cost: 50
+    upgradedPrefab: {fileID: 0}
+    UpgradeCost: 0
 --- !u!4 &762772159
 Transform:
   m_ObjectHideFlags: 0
@@ -5938,8 +5956,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2004476423}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7.11694, y: 0, z: 15.14042}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6537,6 +6555,7 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 1194943350}
   - {fileID: 94073696}
+  - {fileID: 2004476424}
   - {fileID: 944626131}
   - {fileID: 565842248}
   - {fileID: 1448033362}
@@ -6547,4 +6566,3 @@ SceneRoots:
   - {fileID: 1618243077}
   - {fileID: 444196842}
   - {fileID: 1578100727}
-  - {fileID: 2004476424}
