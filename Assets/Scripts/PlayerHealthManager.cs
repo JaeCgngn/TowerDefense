@@ -6,6 +6,7 @@ public class PlayerHealthManager : MonoBehaviour
     public int playerhealth = 10;
 
     public TextMeshProUGUI healthText;
+    public GameObject gameOverPanel;
 
     void Start()
     {
@@ -36,5 +37,17 @@ public class PlayerHealthManager : MonoBehaviour
     {
         healthText.text = "Health: " + playerhealth;
     }
+
+    public void PlayerDeath()
+    {
+            if (playerhealth <= 0)
+            {
+                Debug.Log("Player has died!");
+                Time.timeScale = 0f; // Pause
+                gameOverPanel.SetActive(true);
+
+            }
+    }
+
 }
 
