@@ -33,17 +33,16 @@ public class Node : MonoBehaviour
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
-
-
         if (!buildManager.CanBuild) // Check if we can build
         {
-
             return;
+
         }
 
         if (turret != null) // Check if there is already a turret on this node
         {
-            Debug.Log("Turret exists: " + turret.name);
+
+            buildManager.SelectNode(this);
             return;
         }
         buildManager.BuildTurretOn(this);

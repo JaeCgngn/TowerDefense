@@ -40,7 +40,7 @@ public class UIManager : MonoBehaviour
 
     private void UpdateCountdownUI(float countdown)
     {
-        // Display countdown rounded to 1 decimal
+
         countdownText.text = countdown.ToString("F1");
     }
 
