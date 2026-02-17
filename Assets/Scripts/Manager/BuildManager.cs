@@ -77,6 +77,7 @@ public class BuildManager : MonoBehaviour
             node.transform.position + node.positionOffset,
             Quaternion.identity
         );
+        AudioManager.Instance.PlayInsertTurret();
 
         Destroy(vfx, vfxDestroyTime);
 

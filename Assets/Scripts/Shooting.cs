@@ -25,6 +25,7 @@ public class Shooting : MonoBehaviour
     public event Action OnStartFiring;
     public event Action OnStopFiring;
     public event Action<GameObject> OnBulletFired;
+    
 
     private void Awake()
     {

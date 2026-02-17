@@ -310,7 +310,7 @@ MonoBehaviour:
   bulletLifetime: 3
   bulletSpeed: 20
   bulletDamage: 5
-  bulletsPerShot: 3
+  bulletsPerShot: 5
   burstDelay: 0.1
 --- !u!114 &700250771355769330
 MonoBehaviour:

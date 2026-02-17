@@ -20,6 +20,8 @@ public class Node : MonoBehaviour
 
     BuildManager buildManager;
 
+    public int upgradeLevel = 0;
+
     void Start()
     {
 
@@ -49,7 +51,7 @@ public class Node : MonoBehaviour
         if (turret != null) // Check if there is already a turret on this node
         {
 
-            buildManager.SelectNode(this);
+            buildManager.SelectNode(this); // Select this node to show the upgrade/sell UI
             return;
         }
 
@@ -94,30 +96,45 @@ public class Node : MonoBehaviour
             return;
         }
 
-        // Check if we have enough money
-        if (PlayerStats.Instance.Money < blueprint.UpgradeCost)
+        if (upgradeLevel >= 2) // Assuming we have 3 levels: base, second upgrade, third upgrade
         {
-            Debug.Log("Not enough money to upgrade " + blueprint.prefab.name);
+            Debug.Log("Turret already at max level!");
             return;
         }
 
-        // Deduct the cost
-        PlayerStats.Instance.SpendMoney(blueprint.UpgradeCost);
-        Debug.Log("Upgraded " + blueprint.prefab.name + ". Remaining money: " + PlayerStats.Instance.Money);
+        int cost = 0;
+        GameObject nextPrefab = null;
 
-        // Destroy the old turret
+        if (upgradeLevel == 0) // First upgrade
+        {
+            cost = blueprint.secondUpgradeCost;
+            nextPrefab = blueprint.secondUpgradedPrefab;
+        }
+        else if (upgradeLevel == 1) // Second upgrade
+        {
+            cost = blueprint.ThirdUpgradeCost;
+            nextPrefab = blueprint.thirdUpgradePrefab;
+        }
+
+
+        if (PlayerStats.Instance.Money < cost) // Check if we have enough money for the upgrade
+        {
+            Debug.Log("Not enough money to upgrade.");
+            return;
+        }
+
+        PlayerStats.Instance.SpendMoney(cost); // Deduct the upgrade cost
+
+        BuildManager.instance.DeselectNode(); 
         Destroy(turret);
 
+        turret = Instantiate(nextPrefab, GetBuildPosition(), Quaternion.identity);
 
+        upgradeLevel++;
 
-        // Instantiate the upgraded turret on the node
-        turret = Instantiate(blueprint.upgradedPrefab, GetBuildPosition(), Quaternion.identity);
-        this.turret = turret;
+        AudioManager.Instance.PlayUpgrade();
 
-        isUpgraded = true;
-
-        Debug.Log("Turret upgraded to " + blueprint.upgradedPrefab.name);
-
+        Debug.Log("Turret upgraded to level " + (upgradeLevel + 1));
     }
 
     void OnMouseEnter()

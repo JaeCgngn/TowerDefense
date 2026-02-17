@@ -6,7 +6,7 @@ public class WaveSpawner : MonoBehaviour
 {
 
     public Transform SpawnPoint;
-    public Transform enemyPrefab;
+    public Transform[] enemyPrefabs;
     public float EnemySpawnInterval = 0.5f;
 
 
@@ -83,7 +83,8 @@ public class WaveSpawner : MonoBehaviour
     void SpawnEnemy()
     {
         Debug.Log("Spawning Enemy!");
-        Instantiate(enemyPrefab, SpawnPoint.position, SpawnPoint.rotation);
+        int randomIndex = UnityEngine.Random.Range(0, enemyPrefabs.Length);
+        Instantiate(enemyPrefabs[randomIndex], SpawnPoint.position, SpawnPoint.rotation);
 
         // Transform enemyTransform = Instantiate(enemyPrefab, SpawnPoint.position, SpawnPoint.rotation);
         // EnemyHealth enemy = enemyTransform.GetComponent<EnemyHealth>();

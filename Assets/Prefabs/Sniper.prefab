@@ -111,7 +111,7 @@ MonoBehaviour:
   enemyTarget: {fileID: 6398246753855792550, guid: 6dce639d44e646a459afa85b137dd7db, type: 3}
   partToRotate: {fileID: 1471468253140434902}
   shooting: {fileID: 0}
-  range: 25
+  range: 10
   rotationSpeed: 2
   enemyTag: Enemy
   dotThreshold: 0.5

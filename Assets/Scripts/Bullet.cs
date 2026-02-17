@@ -15,6 +15,7 @@ public class Bullet : MonoBehaviour
     private void Start()
     {
         Destroy(gameObject, lifeTime);
+        AudioManager.Instance.PlayAttack();
     }
 
     public void Initialize(Transform _target, int _damage, float _speed, float _lifeTime)

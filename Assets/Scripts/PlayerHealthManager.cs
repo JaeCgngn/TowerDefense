@@ -50,7 +50,7 @@ public class PlayerHealthManager : MonoBehaviour
                 Debug.Log("Player has died!");
                 Time.timeScale = 0f; // Pause
                 gameOverPanel.SetActive(true);
-
+                AudioManager.Instance.PlayGameOver();
             }
     }
 

@@ -20,6 +20,8 @@ public class PauseUI : MonoBehaviour
         StartCoroutine(ScalePanel(smallScale, normalScale));
 
         isPaused = true;
+
+        AudioManager.Instance.PlayPauseOpen();
     }
 
     public void ClosePause()
@@ -28,6 +30,8 @@ public class PauseUI : MonoBehaviour
         StartCoroutine(ScalePanel(normalScale, smallScale));
 
         isPaused = false;
+
+        AudioManager.Instance.PlayPauseClose();
     }
 
     IEnumerator ScalePanel(Vector3 start, Vector3 end)
